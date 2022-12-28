@@ -4,42 +4,60 @@ import { updateTokenInterval, BASE_URL, logoutUser } from "../auth.js";
 const form = document.querySelector("form");
 const inputs= document.querySelectorAll("input");
 const seleccion=document.querySelector("select");
-
+let usertype = JSON.parse(localStorage.getItem("user"));
 
 form.onsubmit = async function (event) {
     event.preventDefault();
-    
+
+    console.log(usertype);
+
+    let authTokens = JSON.parse(localStorage.getItem("authTokens"));
+
     const body = {
        service: seleccion.value,
        user: 1,
     };
     inputs.forEach((input) => (body[input.name] = input.value));
 
-    console.log(body);
 
 
-    try {
-    const response = await fetch("http://127.0.0.1:8000/login/versionamiento/v2/payment/",{
-        method: "POST",        
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(body),
 
-    }); 
-
-    console.log(response);
-
-    Swal.fire({
-        text: "Pago creado creado",
-        icon: "success",
+    let valid = true;
+    inputs.forEach((input) => {
+      if (input.value === "") {
+        valid = false;
+        return;
+      }
     });
-    
-    } catch (error) {
+
+
+    if (valid) {
+    try {
+        const response = await fetch(BASE_URL + "login/versionamiento/v2/payment/",{
+            method: "POST",        
+            headers: {
+                "Content-Type": "application/json", 
+            },
+            body: JSON.stringify(body),
+
+        }); 
+
         Swal.fire({
-        text: error,
-        icon: "error",
+            text: "Pago creado creado",
+            icon: "success",
         });
+        
+        } catch (error) {
+            Swal.fire({
+            text: error,
+            icon: "error",
+            });
+        }
+    }else{
+            Swal.fire({
+                text: "Tienes que llenar todos los campos",
+                icon: "error",
+                });
     }
 
 };
@@ -50,11 +68,17 @@ form.onsubmit = async function (event) {
 
 //---------------------------SERVICIOSS--------------------------------
 
-const url = "http://127.0.0.1:8000/login/versionamiento/v2/readService/";
 
 async function getServicio(){
+    let authTokens = JSON.parse(localStorage.getItem("authTokens"));
 
-    const response = await fetch(url);
+    const response = await fetch(BASE_URL + "login/versionamiento/v2/readService/",{
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + authTokens?.access
+
+    }});
     const data=await response.json();
 
     data.results.forEach((service) => {
