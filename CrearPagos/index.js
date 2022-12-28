@@ -1,5 +1,6 @@
 
 import { updateTokenInterval, BASE_URL, logoutUser } from "../auth.js";
+import { validacion } from "../reutilizable.js";
 
 const form = document.querySelector("form");
 const inputs= document.querySelectorAll("input");
@@ -20,16 +21,7 @@ form.onsubmit = async function (event) {
     inputs.forEach((input) => (body[input.name] = input.value));
 
 
-
-
-    let valid = true;
-    inputs.forEach((input) => {
-      if (input.value === "") {
-        valid = false;
-        return;
-      }
-    });
-
+    let valid=validacion(inputs)
 
     if (valid) {
     try {

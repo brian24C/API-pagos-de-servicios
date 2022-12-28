@@ -20,21 +20,22 @@ const fetchData=async (url, method="GET", authTokens, header_content=null, body=
 
 }
 
-function validate(params) {
-    let c = 0;
-    params.forEach((value) => {
-      if (value === "") {
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "All fields are required!",
-        });
-        c++;
-      }
-    });
-    return c===0;
-  }
+
   
 
 
-export {fetchData, validate};
+function validacion(params) {
+  let valid = true;
+  params.forEach((input) => {
+    console.log(input.name, ":", input.value)
+    if (input.value === "") {
+      valid = false;
+      return valid;
+    }
+  });
+  return valid
+
+}
+
+
+export {fetchData, validacion};
