@@ -1,5 +1,5 @@
 
-import { updateTokenInterval, BASE_URL, logoutUser, validateAuth } from "../auth.js";
+import { updateTokenInterval, BASE_URL, validateAuth } from "../auth.js";
 import { validacion } from "../reutilizable.js";
 
 validateAuth("../index.html")
@@ -18,7 +18,7 @@ form.onsubmit = async function (event) {
 
     const body = {
        service: seleccion.value,
-       user: 1,
+       user: usertype.id,
     };
     inputs.forEach((input) => (body[input.name] = input.value));
 
