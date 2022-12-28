@@ -194,21 +194,3 @@ verMenosLink_vencidos.onclick = function(){
 
 
 
-//-------------------Codigo que se repite en todos los index.js de cada carpeta-------------------------------
-
-
-
-
-
-if (usertype.is_superuser){
-    servicio.innerHTML=`<a class="nav-link" href="/servicios/">Servicios</a>`
-}
-
-contenedor_user.innerHTML = `<p>${usertype.email}</p>`
-
-const logoutButton = document.getElementById("logout");
-logoutButton.addEventListener("click", logoutUser);
-
-
-
-updateTokenInterval();

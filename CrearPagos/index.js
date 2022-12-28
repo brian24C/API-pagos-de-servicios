@@ -1,4 +1,5 @@
 
+import { updateTokenInterval, BASE_URL, logoutUser } from "../auth.js";
 
 const form = document.querySelector("form");
 const inputs= document.querySelectorAll("input");

@@ -1,6 +1,5 @@
 
 import { validateToken,BASE_URL } from "./auth.js";
-import validate from "./validation.js";
 
 
 validateToken("./ver_pagos/");
@@ -20,7 +19,7 @@ form.onsubmit = async function(event){
     
 
     try {
-        const response = await fetch("http://127.0.0.1:8000/login/",{
+        const response = await fetch(BASE_URL + "login/",{
             method: "POST",        
             headers: {
                 "Content-Type": "application/json",
