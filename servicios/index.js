@@ -27,6 +27,7 @@ const selectedOption = sessionStorage.getItem("selectedOption");
 button_add.onclick = async function() {
 
     let authTokens = JSON.parse(localStorage.getItem("authTokens"));
+    
 
     const formData = new FormData();
 
@@ -259,3 +260,7 @@ function mostrar(data,seleccion) {
       nam.value = mostrar_al_modificar[0].name;
       des.value = mostrar_al_modificar[0].descripcion; 
 }
+
+
+
+updateTokenInterval();
