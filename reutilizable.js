@@ -37,5 +37,19 @@ function validacion(params) {
 
 }
 
+function validacion_objeto(params) {
+  let valid = true;
+  params.forEach((value, key) => {
+    if (value === "" || value==="undefined") {
+      valid = false;
+      return valid;
+    }
+  
+  });
+  return valid;
 
-export {fetchData, validacion};
+}
+
+
+
+export {fetchData, validacion, validacion_objeto};

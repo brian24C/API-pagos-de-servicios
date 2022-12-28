@@ -1,5 +1,7 @@
-import { updateTokenInterval, BASE_URL, logoutUser } from "../auth.js";
+import { updateTokenInterval, BASE_URL, logoutUser, validateAuth } from "../auth.js";
 import { fetchData } from "../reutilizable.js";
+
+validateAuth("../index.html")
 
 const realizados = document.querySelector("#pagos_realizados");
 const expirados = document.querySelector("#pagos_expirados");
@@ -55,6 +57,8 @@ async function realizado(desplegar=false){
         const mostrar_servicio = data_service.results.filter(
             (item) => item.id === (Realizado.service)
           ); 
+        
+
         realizados.innerHTML += renderRealizado(Realizado, mostrar_servicio)
 
      });

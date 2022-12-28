@@ -1,3 +1,8 @@
+import { updateTokenInterval, BASE_URL, logoutUser, validateAuth } from "../auth.js";
+import { validacion_objeto } from "../reutilizable.js";
+
+validateAuth("../index.html")
+
 const button_add = document.getElementById('anadir');
 const button_update = document.getElementById('actualizar');
 const logoInput = document.getElementById('logo');
@@ -21,6 +26,8 @@ const selectedOption = sessionStorage.getItem("selectedOption");
 
 button_add.onclick = async function() {
 
+    let authTokens = JSON.parse(localStorage.getItem("authTokens"));
+
     const formData = new FormData();
 
     // Agrega los valores de los primeros 2 inputs al formData 
@@ -30,30 +37,22 @@ button_add.onclick = async function() {
     formData.append('Logo', logoInput.files[0]);
 
 
-
     formData.forEach((value, key) => {
         console.log(`${key}: ${value}`);
     });
 
     //-------------------------------------------
 
-    let valid = true;
-
-    formData.forEach((value, key) => {
-        console.log(value, key);
-      if (value === "" || value==="undefined") {
-        valid = false;
-        return;
-      }
-    });
+    let valid=validacion_objeto(formData);
 
     
     if (valid) {
 
         try {
-            const response = await fetch("http://127.0.0.1:8000/login/versionamiento/v2/readService/",{
+            const response = await fetch(BASE_URL + "login/versionamiento/v2/readService/",{
                 method: "POST",        
                 headers: {
+                    'Authorization': 'Bearer ' + authTokens?.access
                 },
                 body: formData,
         
@@ -102,6 +101,7 @@ button_add.onclick = async function() {
 
 button_update.onclick = async function() {
 
+    let authTokens = JSON.parse(localStorage.getItem("authTokens"));
     const formData = new FormData();
 
     // Agrega los valores de los primeros tres inputs al formData menos el último que es el logo
@@ -112,23 +112,15 @@ button_update.onclick = async function() {
     
 
 
-    let valid = true;
-
-    formData.forEach((value, key) => {
-        console.log(value, key);
-      if (value === "" || value==="undefined") {
-        valid = false;
-        return;
-      }
-    });
-
+    let valid=validacion_objeto(formData);
     
     if (valid) {
 
         try {
-            const response = await fetch(`http://127.0.0.1:8000/login/versionamiento/v2/readService/${seleccion.value}/`,{
+            const response = await fetch(BASE_URL + `login/versionamiento/v2/readService/${seleccion.value}/`,{
                 method: "put",        
                 headers: {
+                    'Authorization': 'Bearer ' + authTokens?.access
                 },
                 body: formData,
         
@@ -138,6 +130,8 @@ button_update.onclick = async function() {
             Swal.fire({
                 text: "Servicio Actualizado",
                 icon: "success",
+            }).then(() => {
+                location.reload();
             });
             
         } catch (error) {
@@ -162,6 +156,8 @@ button_update.onclick = async function() {
 
 btnDelete.onclick = async function() {
 
+    let authTokens = JSON.parse(localStorage.getItem("authTokens"));
+
     const { value } = await Swal.fire({
         title: `Esta seguro de eliminar el servicio seleccionado?, Recuerda que se eliminarán todos los registros asociados a este servicio.`,
         showDenyButton: true,
@@ -173,9 +169,10 @@ btnDelete.onclick = async function() {
     if (value) {
 
         try {
-            const response = await fetch(`http://127.0.0.1:8000/login/versionamiento/v2/readService/${seleccion.value}/`,{
+            const response = await fetch(BASE_URL + `login/versionamiento/v2/readService/${seleccion.value}/`,{
                 method: "DELETE",        
                 headers: {
+                    'Authorization': 'Bearer ' + authTokens?.access
                 },
             }); 
 
@@ -210,13 +207,20 @@ btnDelete.onclick = async function() {
 //-----------------------Listar servicios en MODIFICAR SERVICIO---------------------------------
 
 
-const url = "http://127.0.0.1:8000/login/versionamiento/v2/readService/";
 
 async function getServicio(){
 
+    let authTokens = JSON.parse(localStorage.getItem("authTokens"));
 
+    const response = await fetch(BASE_URL + "login/versionamiento/v2/readService/", {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': 'Bearer ' + authTokens?.access
+        } 
 
-    const response = await fetch(url);
+    });
     const data=await response.json();
 
     data.results.forEach((service) => {

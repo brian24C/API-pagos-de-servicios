@@ -1,6 +1,8 @@
 
-import { updateTokenInterval, BASE_URL, logoutUser } from "../auth.js";
+import { updateTokenInterval, BASE_URL, logoutUser, validateAuth } from "../auth.js";
 import { validacion } from "../reutilizable.js";
+
+validateAuth("../index.html")
 
 const form = document.querySelector("form");
 const inputs= document.querySelectorAll("input");
@@ -21,7 +23,7 @@ form.onsubmit = async function (event) {
     inputs.forEach((input) => (body[input.name] = input.value));
 
 
-    let valid=validacion(inputs)
+    let valid=validacion(inputs);
 
     if (valid) {
     try {
@@ -29,6 +31,7 @@ form.onsubmit = async function (event) {
             method: "POST",        
             headers: {
                 "Content-Type": "application/json", 
+                'Authorization': 'Bearer ' + authTokens?.access
             },
             body: JSON.stringify(body),
 
@@ -98,3 +101,4 @@ function renderServicio(service) {
 }
 
 
+updateTokenInterval();
