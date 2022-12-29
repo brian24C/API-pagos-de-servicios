@@ -1,5 +1,11 @@
 ## API DE PAGO DE SERVICIOS
 
+#### Usuarios para probar la api:
+	correo: castro@hotmail.com  contraseña: brianjosue      -> ES SUPERUSPER    
+	correo: josue@hotmail.com  contraseña: brianjosue       -> ES SUPERUSPER 
+	correo: brian@hotmail.com  contraseña: brianjosue       -> USUARIO NORMAL
+	
+
 ### Punto inportante:
 - En JS se hace uso del localStorage:
 		El "localStorage" está disponible en la mayoría de los navegadores modernos y, por lo general, está habilitado de forma predeterminada. Sin embargo, en algunos casos, el "localStorage" puede estar deshabilitado o no estar disponible.
