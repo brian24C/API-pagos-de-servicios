@@ -1,4 +1,4 @@
-var BASE_URL="http://127.0.0.1:8000/"
+var BASE_URL="https://proyecto-unidad-5-production.up.railway.app/"
 
 function validateAuth(archivoRedirect) {
   let token = localStorage.getItem("authTokens");
