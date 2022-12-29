@@ -1,5 +1,5 @@
 import { updateTokenInterval, BASE_URL, logoutUser, validateAuth } from "../auth.js";
-import { fetchData } from "../reutilizable.js";
+import { DatosFiltrados,TodosRegistros, Pagos_vencidos_UsuarioNormal, Pagos_vencidos_SuperUser} from "../reutilizable.js";
 
 validateAuth("../index.html")
 
@@ -16,13 +16,16 @@ const servicio = document.getElementById('service');
 const contenedor_user=document.getElementById('user-email');
 
 let usertype = JSON.parse(localStorage.getItem("user"));
+
+const tituloRealizado = document.getElementById('tituloRealizados');
+const tituloVencido = document.getElementById('tituloVencidos');
 //---------------------------pagos realizados--------------------------------
 
 
 
 async function realizado(desplegar=false){
 
-    console.log(usertype);
+
     
     let authTokens = JSON.parse(localStorage.getItem("authTokens"));
 
@@ -34,7 +37,7 @@ async function realizado(desplegar=false){
         }    
     });
    
-    const data=await response.json();
+    ;
 
     const response_service = await fetch(BASE_URL + "login/versionamiento/v2/readService/", {
         method: 'GET',
@@ -44,21 +47,26 @@ async function realizado(desplegar=false){
             'Authorization': 'Bearer ' + authTokens?.access
         } 
     });
+
+    const data=await response.json()
+
+    // Si el usuario no es superusuario entonces solo le mostrará los pagos del usuario logeado, en caso contrario se mostrará de todos los usuarios
+
+    let PagosUsuario=DatosFiltrados(data.results, usertype, desplegar)
+    tituloVencido.innerHTML="Tus Pagos Vencidos"
+    tituloRealizado.innerHTML="Tus pagos Realizados"
+    if(usertype.is_superuser){
+        PagosUsuario=TodosRegistros(data.results,desplegar)
+        tituloVencido.innerHTML="Pagos Vencidos"
+        tituloRealizado.innerHTML="Pagos Realizados"
+    }
+
+
     const data_service=await response_service.json();
-    
-    let results = data.results.slice(0, 2)
-    if(desplegar){
-         results=data.results.slice(2, data.results.length+1)
-    };
-
-
-    results.forEach((Realizado) => {
+   
+    PagosUsuario.forEach((Realizado) => {
         
-        const mostrar_servicio = data_service.results.filter(
-            (item) => item.id === (Realizado.service)
-          ); 
-        
-
+        const mostrar_servicio = data_service.results.filter((item) => item.id === (Realizado.service)); 
         realizados.innerHTML += renderRealizado(Realizado, mostrar_servicio)
 
      });
@@ -104,6 +112,10 @@ verMenosLink.onclick = function(){
 
 
 
+
+
+
+
 //---------------------------pagos VENCIDOS--------------------------------
 
 
@@ -120,7 +132,7 @@ async function expirado(desplegar=false){
         } 
 
     });
-    const data=await response.json();
+    
 
     const response2 = await fetch(BASE_URL +"login/versionamiento/v2/payment/", {
         method: 'GET',
@@ -131,7 +143,7 @@ async function expirado(desplegar=false){
         }   
     });
 
-    const data2=await response2.json();
+    
 
     const response_service = await fetch(BASE_URL + "login/versionamiento/v2/readService/", {
         method: 'GET',
@@ -142,23 +154,29 @@ async function expirado(desplegar=false){
         } 
 
     });
+    
+
+    const data=await response.json();
+    const data2=await response2.json();
     const data_service=await response_service.json();
 
-    let results = data.results.slice(0, 2)
-    if(desplegar){
-         results=data.results.slice(2, data.results.length+1)
-    };
 
 
-    results.forEach((expirado) => {
-        const payment=data2.results.filter(item => item.id === expirado.pay_user_id);
-        const mostrar_servicio = data_service.results.filter(
-            (item) => item.id === (payment[0].service)
-          ); 
+    // Obtengo una lista con todos los pagos vencidos del user normal logeado, si es superuser entonces obtengo todos los pagos vencidos de todos los usuarios. 
+    //PagosVencidosUsuario es una variable para el "ver mas" de mi api
+    const PagosExpirados=Pagos_vencidos_UsuarioNormal(data.results, data2.results, usertype);
+    let PagosVencidosUsuario=TodosRegistros(PagosExpirados,desplegar);
+    if(usertype.is_superuser){
+        const TodosPagosVencidos=Pagos_vencidos_SuperUser(data.results,data2.results)
+        PagosVencidosUsuario=TodosRegistros(TodosPagosVencidos, desplegar);  
+    }
 
-        expirados.innerHTML += renderExpirado(expirado, payment, mostrar_servicio)
-
-     });
+    PagosVencidosUsuario.forEach((payment) => {
+        const expired=data.results.filter(item => item.pay_user_id === payment.id)
+        const mostrar_servicio = data_service.results.filter((item) => item.id === (payment.service)); 
+        console.log(expired);
+        expirados.innerHTML += renderExpirado(expired, payment, mostrar_servicio)
+    });
 
 
 }
@@ -167,16 +185,17 @@ expirado();
 
 
 
-function renderExpirado(expirado, payment, mostrar_servicio) {
+function renderExpirado(expired, payment, mostrar_servicio) {
+    
 
     return `
     <tr >
         <td><img src="${mostrar_servicio[0].Logo}" alt="Logo del servicio" width="50"></td>
         <td>${mostrar_servicio[0].name}</td>
-        <td>${payment[0].paymentDate}</td>
-        <td>${payment[0].amount} $</td>
-        <td>${expirado.penalty_fee_amount}</td>
-        <td>${expirado.pay_user_id}</td>
+        <td>${payment.paymentDate}</td>
+        <td>${payment.amount} $</td>
+        <td>${expired[0].penalty_fee_amount}</td>
+        <td>${expired[0].pay_user_id}</td>
     </tr>
     `;
 
