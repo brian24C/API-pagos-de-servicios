@@ -1,4 +1,4 @@
-var BASE_URL="https://web-production-1be5.up.railway.app"
+var BASE_URL="https://web-production-1be5.up.railway.app/"
 //https://web-production-1be5.up.railway.app
 
 function validateAuth(archivoRedirect) {
