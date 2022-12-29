@@ -35,7 +35,7 @@ nav.innerHTML=`
         <a class="navbar-brand" href="#">
             <div class="d-flex align-items-center">
             <span id="user-email" class="text-primary h3 box-shadow" style="margin-right: 15px ">brian</span>
-            <img src="http://127.0.0.1:8000/media/images/3.png/" width="50" height="40" class="d-inline-block align-center" alt="">
+            <img src="${BASE_URL}media/images/3.png/" width="50" height="40" class="d-inline-block align-center" alt="">
             </div>
         </a>
   
