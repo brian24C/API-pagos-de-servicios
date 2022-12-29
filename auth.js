@@ -1,15 +1,25 @@
-var BASE_URL="https://proyecto-unidad-5-production.up.railway.app/"
+var BASE_URL="http://127.0.0.1:8000/"
 
 function validateAuth(archivoRedirect) {
   let token = localStorage.getItem("authTokens");
+
+  if(token==="undefined") {
+    token = undefined;
+  }
+ 
   if (!token) {
-    window.location.href = archivoRedirect;
+    return window.location.href = archivoRedirect;
   }
 }
 
 function validateToken(archivoRedirect) {
   let token = localStorage.getItem("authTokens");
   console.log(token);
+
+  if(token==="undefined") {
+    token = undefined;
+  }
+
   if (token) {
     window.location.href = archivoRedirect;
   }
