@@ -195,7 +195,6 @@ function renderExpirado(expired, payment, mostrar_servicio) {
         <td>${payment.paymentDate}</td>
         <td>${payment.amount} $</td>
         <td>${expired[0].penalty_fee_amount}</td>
-        <td>${expired[0].pay_user_id}</td>
     </tr>
     `;
 
