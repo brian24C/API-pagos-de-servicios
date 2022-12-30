@@ -37,11 +37,6 @@ button_add.onclick = async function() {
     // Agrega la imagen al formData
     formData.append('Logo', logoInput.files[0]);
 
-
-    formData.forEach((value, key) => {
-        console.log(`${key}: ${value}`);
-    });
-
     //-------------------------------------------
 
     let valid=validacion_objeto(formData);
@@ -85,8 +80,6 @@ button_add.onclick = async function() {
      
 
 
-
-    //Agrego este código porque el catch no me funciona
 
    
 
@@ -196,12 +189,6 @@ btnDelete.onclick = async function() {
     }       
 
 };
-
-
-
-
-
-
 
 
 

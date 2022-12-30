@@ -12,8 +12,6 @@ let usertype = JSON.parse(localStorage.getItem("user"));
 form.onsubmit = async function (event) {
     event.preventDefault();
 
-    console.log(usertype);
-
     let authTokens = JSON.parse(localStorage.getItem("authTokens"));
 
     const body = {

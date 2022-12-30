@@ -174,7 +174,6 @@ async function expirado(desplegar=false){
     PagosVencidosUsuario.forEach((payment) => {
         const expired=data.results.filter(item => item.pay_user_id === payment.id)
         const mostrar_servicio = data_service.results.filter((item) => item.id === (payment.service)); 
-        console.log(expired);
         expirados.innerHTML += renderExpirado(expired, payment, mostrar_servicio)
     });
 

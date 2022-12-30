@@ -24,7 +24,6 @@ button_add.onclick = async function() {
     });
 
     let valid=validacion_objeto(formData);
-    console.log(valid);
     
     if (valid) {
 
@@ -43,9 +42,7 @@ button_add.onclick = async function() {
         const data=await response.json();
     
     
-        const logo=data.results.filter(item => item.user_id === usertype.id);
-        console.log(logo);
-        console.log(logo[0]);
+        const logo=data.results.filter(item => item.user_id === usertype.id);;
          //---------------------------------------------------------
 
         if (logo.length === 0){
@@ -57,8 +54,6 @@ button_add.onclick = async function() {
                     body: formData,
             
                 }); 
-                
-                //LogoEscogido.innerHTML=`<img class="card-img-top" src="${BASE_URL}media/FotoPerfil/${formData.get("perfil").name}" alt="Card image cap">`
             
                 Swal.fire({
                     text: "Logo de usuario añadido exitosamente",
@@ -84,8 +79,6 @@ button_add.onclick = async function() {
                     body: formData,
             
                 }); 
-                
-                //LogoEscogido.innerHTML=`<img class="card-img-top" src="${BASE_URL}media/FotoPerfil/${formData.get("perfil").name}" alt="Card image cap">`
             
                 Swal.fire({
                     text: "Logo de usuario Actualizado existosamente",
@@ -145,14 +138,10 @@ async function getLogo(){
 const logo=getLogo();
 
 logo.then(variable => {
-    console.log(variable)
     if(variable.length > 0){
-        //logouser.src=`${variable[0].perfil}`
-        //logouser.innerHTML= `<img id="logousuario" src="${variable[0].perfil}" width="40" height="40" class="d-inline-block align-center" alt="">`;
         LogoEscogid.src=`${variable[0].perfil}`
     }else{
         LogoEscogid.src="/static/logouser/logo1.png"
-        //logouser.innerHTML= `<img id="logousuario" src="/static/logouser/logo1.png" width="40" height="40" class="d-inline-block align-center" alt="">`;
     }
   });
 

@@ -4,12 +4,6 @@ import { validateToken,BASE_URL } from "./auth.js";
 
 validateToken("./ver_pagos/");
 
-console.log(localStorage.getItem("authTokens"));
-console.log(typeof localStorage.getItem("authTokens"));
-
-if (localStorage.getItem("authTokens") === null){
-    console.log("es nul");
-};
 
 const inputs= document.querySelectorAll("input");
 const form = document.querySelector("form");

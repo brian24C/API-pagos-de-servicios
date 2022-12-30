@@ -93,7 +93,6 @@ async function getLogo(){
 const logo=getLogo();
 
 logo.then(variable => {
-    console.log(variable)
     if(variable.length > 0){
         logouser.innerHTML= `<img id="logousuario" src="${variable[0].perfil}" width="40" height="40" class="d-inline-block align-center" alt="">`;
     }else{
