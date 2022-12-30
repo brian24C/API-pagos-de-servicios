@@ -1,5 +1,5 @@
 
-import { updateTokenInterval, BASE_URL, logoutUser , validateAuth} from "../auth.js";
+import { BASE_URL, logoutUser } from "../auth.js";
 
 
 
@@ -32,10 +32,11 @@ nav.innerHTML=`
         </div>
         
    
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="/perfilusuario/">
             <div class="d-flex align-items-center">
             <span id="user-email" class="text-primary h3 box-shadow" style="margin-right: 15px ">brian</span>
-            <img src="/static/logouser/logo1.png" width="40" height="40" class="d-inline-block align-center" alt="">
+            <div id=logopruebar>
+            </div>
             </div>
         </a>
   
@@ -48,8 +49,11 @@ let usertype = JSON.parse(localStorage.getItem("user"));
 const servicio = document.getElementById('service');
 const contenedor_user=document.getElementById('user-email');
 
+const logouserescogido=document.getElementById('Logoescogido');
+const logouser=document.getElementById('logopruebar');
 
 //-------------------Codigo que se repite en todos los index.js de cada carpeta-------------------------------
+
 
 
 if (usertype.is_superuser){
@@ -63,7 +67,41 @@ logoutButton.addEventListener("click", logoutUser);
 
 
 
-updateTokenInterval();
+//------------------------Obtener el Logo del usuario logeado en el navbar----------------
+
+async function getLogo(){
+
+    let authTokens = JSON.parse(localStorage.getItem("authTokens"));
+
+    const response = await fetch(BASE_URL + "login/versionamiento/v2/perfil/", {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+        } 
+    });
+    const data=await response.json();
+
+
+    const logo=data.results.filter(item => item.user_id === usertype.id);
+    return logo;
+}
+
+
+//---Si existe un logo del usuario en la tabla de logos entonces se pondrá ese logo, sino se pondra el logo estatico
+
+const logo=getLogo();
+
+logo.then(variable => {
+    console.log(variable)
+    if(variable.length > 0){
+        logouser.innerHTML= `<img id="logousuario" src="${variable[0].perfil}" width="40" height="40" class="d-inline-block align-center" alt="">`;
+    }else{
+        logouser.innerHTML= `<img id="logousuario" src="/static/logouser/logo1.png" width="40" height="40" class="d-inline-block align-center" alt="">`;
+    }
+  });
+
+
 
 
 
