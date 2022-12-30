@@ -29,13 +29,13 @@ button_add.onclick = async function() {
 
         //---------------------------------------------------------
         
-        let authTokens = JSON.parse(localStorage.getItem("authTokens"));
     
         const response = await fetch(BASE_URL + "login/versionamiento/v2/perfil/", {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
+                'Authorization': 'Bearer ' + authTokens?.access
             } 
     
         });
@@ -50,7 +50,9 @@ button_add.onclick = async function() {
             try {
                 const response = await fetch(BASE_URL + "login/versionamiento/v2/perfil/",{
                     method: "POST",        
-
+                    headers: {
+                        'Authorization': 'Bearer ' + authTokens?.access
+                    },
                     body: formData,
             
                 }); 
@@ -74,8 +76,10 @@ button_add.onclick = async function() {
             
             try {
                 const response = await fetch(BASE_URL + `login/versionamiento/v2/perfil/${logo[0].id}/`,{
-                    method: "put",        
-
+                    method: "put",  
+                    headers: {
+                        'Authorization': 'Bearer ' + authTokens?.access
+                    },      
                     body: formData,
             
                 }); 
@@ -122,6 +126,7 @@ async function getLogo(){
         headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
+            'Authorization': 'Bearer ' + authTokens?.access
         } 
     });
     const data=await response.json();

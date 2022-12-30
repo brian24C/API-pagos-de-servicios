@@ -78,6 +78,7 @@ async function getLogo(){
         headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
+            'Authorization': 'Bearer ' + authTokens?.access
         } 
     });
     const data=await response.json();
