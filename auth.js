@@ -1,4 +1,4 @@
-var BASE_URL="https://web-production-1be5.up.railway.app/"
+var BASE_URL="https://django-rest-frameworkunidad-5-production.up.railway.app/"
 //var BASE_URL="http://127.0.0.1:8000/"
 
 function validateAuth(archivoRedirect) {
