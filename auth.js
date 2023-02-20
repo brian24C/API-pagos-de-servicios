@@ -1,4 +1,4 @@
-var BASE_URL="https://django-rest-framework-unidad-5.vercel.app/"
+var BASE_URL="https://django-rest-framework-unidad-5-kz52qkuq7-brian24c.vercel.app/"
 //var BASE_URL="http://127.0.0.1:8000/"
 
 function validateAuth(archivoRedirect) {
