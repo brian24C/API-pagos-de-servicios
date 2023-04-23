@@ -1,5 +1,5 @@
-//var BASE_URL="https://backend-api-de-servicios.up.railway.app/"
-var BASE_URL = "http://127.0.0.1:8000/";
+var BASE_URL = "https://backend-api-de-servicios.up.railway.app/";
+//var BASE_URL = "http://127.0.0.1:8000/";
 
 function validateAuth(archivoRedirect) {
   let token = localStorage.getItem("authTokens");
