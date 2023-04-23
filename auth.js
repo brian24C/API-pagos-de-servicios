@@ -1,22 +1,22 @@
-var BASE_URL="https://backend-api-de-servicios.up.railway.app/"
-//var BASE_URL="http://127.0.0.1:8000/"
+//var BASE_URL="https://backend-api-de-servicios.up.railway.app/"
+var BASE_URL = "http://127.0.0.1:8000/";
 
 function validateAuth(archivoRedirect) {
   let token = localStorage.getItem("authTokens");
 
-  if(token==="undefined") {
+  if (token === "undefined") {
     token = undefined;
   }
- 
+
   if (!token) {
-    return window.location.href = archivoRedirect;
+    return (window.location.href = archivoRedirect);
   }
 }
 
 function validateToken(archivoRedirect) {
   let token = localStorage.getItem("authTokens");
 
-  if(token==="undefined") {
+  if (token === "undefined") {
     token = undefined;
   }
 
@@ -26,11 +26,11 @@ function validateToken(archivoRedirect) {
 }
 
 function updateTokenInterval() {
-    let fourMinutes=1000*60*25 //25 minutes
-    let interval = setInterval(() => {
-        updateToken();
-      }, fourMinutes);
-      return () => clearInterval(interval);
+  let fourMinutes = 1000 * 60 * 25; //25 minutes
+  let interval = setInterval(() => {
+    updateToken();
+  }, fourMinutes);
+  return () => clearInterval(interval);
 }
 
 let updateToken = async () => {
@@ -46,12 +46,11 @@ let updateToken = async () => {
   });
   let data = await response.json();
   if (response.status === 200) {
-    authTokens.access=data.access
+    authTokens.access = data.access;
     localStorage.setItem("authTokens", JSON.stringify(authTokens));
   } else {
     logoutUser();
   }
-
 };
 
 let logoutUser = () => {
@@ -60,4 +59,10 @@ let logoutUser = () => {
   window.location.replace("../index.html");
 };
 
-export { validateAuth, validateToken, updateTokenInterval,logoutUser, BASE_URL };
+export {
+  validateAuth,
+  validateToken,
+  updateTokenInterval,
+  logoutUser,
+  BASE_URL,
+};

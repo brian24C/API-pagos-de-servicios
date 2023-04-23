@@ -1,31 +1,61 @@
-
-
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     <title>Formulario Login</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css" />
   </head>
+
+    
+  </style>
   <body>
-  <form action="">
-    <section class="form-login">
-
-  
-
-      <h5>Formulario Login</h5>
-      <input class="controls" type="text" name="email" value="" placeholder="Email">
-      <input class="controls" type="password" name="password" value="" placeholder="Contraseña">
-     <button type="submit" class="buttons">Login</button>
-     <a href="./CrearCuenta/" class="btn btn-link" style="text-align: center;">Crear cuenta</a>
-    
-
-    </section>
-
+<div class="datos-usuarios">
+  <h1>Prueba con estas cuentas</h1>
+  <h4>Puedes ingresar como superusuario (Puede usar todo el CRUD) o usuario normal:</h4>
+  <table>
+    <tr>
+      <td><strong>Correo:</strong></td>
+      <td>josue@hotmail.com</td>
+      <td><strong>Contraseña:</strong></td>
+      <td>brianjosue</td>
+      <td><strong>Tipo de usuario:</strong></td>
+      <td>ES SUPERUSPER</td>
+    </tr>
+    <tr>
+      <td><strong>Correo:</strong></td>
+      <td>brian@hotmail.com</td>
+      <td><strong>Contraseña:</strong></td>
+      <td>brianjosue</td>
+      <td><strong>Tipo de usuario:</strong></td>
+      <td>USUARIO NORMAL</td>
+    </tr>
+  </table>
+</div>
+    <form action="">
+      <section class="form-login">
+        <h5>Login</h5>
+        <input
+          class="controls"
+          type="text"
+          name="email"
+          value=""
+          placeholder="Email"
+        />
+        <input
+          class="controls"
+          type="password"
+          name="password"
+          value=""
+          placeholder="Contraseña"
+        />
+        <button type="submit" class="buttons">Login</button>
+        <a href="./CrearCuenta/" class="btn btn-link" style="text-align: center"
+          >Crear cuenta</a
+        >
+      </section>
     </form>
-    
+
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.6.16/dist/sweetalert2.all.min.js"></script>
     <script type="module" src="./index.js"></script>
-
   </body>
 </html>
